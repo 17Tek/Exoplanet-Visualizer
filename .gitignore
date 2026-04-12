@@ -5,7 +5,7 @@ target/
 .kotlin
 
 # Sensitive config
-src/main/resources/application.properties
+application.properties
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
