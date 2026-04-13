@@ -6,6 +6,7 @@ module com.tek.dataproject {
     requires spring.jdbc;
     requires spring.tx;
     requires java.sql;
+    requires spring.boot.autoconfigure;
 
     opens com.tek.dataproject to javafx.fxml, spring.beans;
     exports com.tek.dataproject;
