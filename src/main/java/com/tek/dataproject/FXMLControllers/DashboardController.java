@@ -6,19 +6,15 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.StackedAreaChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import javafx.scene.paint.Color;
+import java.util.*;
 
 @Component
 public class DashboardController {
@@ -31,8 +27,7 @@ public class DashboardController {
     @FXML private Label hostStarNameDisplay;
     @FXML private Button generateRandomPlanet;
     @FXML private StackPane systemPane;
-    @FXML private StackedAreaChart stackedAreaChart;
-
+    @FXML private BarChart<String, Number> barChart;
 
 
     @FXML
@@ -70,32 +65,22 @@ public class DashboardController {
         planetNameDisplay.setText(planet.planetName());
         hostStarNameDisplay.setText(planet.hostStar());
         renderSystem(planet.hostStar());
+        setBarChart(exoplanetService.travelTimes(planet), planet);
     }
 
-    public void handleBarChart(Exoplanet planet){
+    public void setBarChart(Map<String, Double> time, Exoplanet exoplanet) {
+        barChart.getData().clear();
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Travel Time (Years)");
 
-        double lightYears;
-        double miles;
-        double kilometers;
+        for (Map.Entry<String, Double> entry : time.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
 
-        double distPC = planet.distFromEarthPc();
-        System.out.println(distPC);
-
-
-
-
-        /* Conversion factors for a parsec
-
-    3.26156 light-years (ly)
-30.86 trillion kilometers (
-
- km)
-19.17 trillion miles (
-
- miles)
-206,265 Astronomical Units (AU)
-     */
+        barChart.getData().add(series);
     }
+
+
 
 
 

@@ -68,14 +68,14 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="435.0">
                <children>
                   <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
-                  <StackedAreaChart prefHeight="302.0" prefWidth="294.0" fx:id="stackedAreaChart">
+                  <BarChart prefHeight="305.0" prefWidth="295.0" fx:id="barChart">
                     <xAxis>
-                      <NumberAxis side="BOTTOM" />
+                      <CategoryAxis side="BOTTOM" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis side="LEFT" />
                     </yAxis>
-                  </StackedAreaChart>
+                  </BarChart>
                </children>
             </AnchorPane>
         </items>
