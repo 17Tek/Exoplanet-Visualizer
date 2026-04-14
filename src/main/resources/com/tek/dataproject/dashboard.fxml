@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="863.0" prefWidth="1493.0" style="-fx-background-color: #0a0e27" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="863.0" prefWidth="1493.0" style="-fx-background-color: #0a0e27" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
    <bottom>
-      <ButtonBar prefHeight="157.0" prefWidth="951.0" BorderPane.alignment="CENTER">
-        <buttons>
-            <Button mnemonicParsing="false" prefHeight="71.0" prefWidth="50.0" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Slider />
-            <ProgressBar prefWidth="200.0" progress="0.0" />
-            <ToggleButton mnemonicParsing="false" text="ToggleButton" />
-        </buttons>
+      <ButtonBar prefHeight="162.0" prefWidth="1493.0" BorderPane.alignment="CENTER">
+         <buttons>
+            <ProgressBar fx:id="progressBar" prefHeight="51.0" prefWidth="200.0" progress="0.0" />
+            <Slider fx:id="slider1" orientation="VERTICAL" />
+            <Slider fx:id="slider2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="162.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Slider>
+            <ToggleButton fx:id="toggleButton" mnemonicParsing="false" prefHeight="99.0" text="ToggleButton" />
+            <ProgressIndicator fx:id="progressIndicator" prefHeight="205.0" progress="0.0" />
+            <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
+            <Button fx:id="generateRandomPlanet" mnemonicParsing="false" onAction="#handleRandomPlanet" text="Random Planet" />
+            <Button fx:id="button2" mnemonicParsing="false" text="Button" />
+         </buttons>
       </ButtonBar>
    </bottom>
     <center>
@@ -33,9 +41,12 @@
    <top>
       <TextFlow prefHeight="88.0" prefWidth="1490.0" BorderPane.alignment="CENTER">
          <children>
-             <Label fx:id="statusLabel1" prefHeight="53.0" prefWidth="200.0" text="Status 1" />
-             <Label fx:id="planetNameDisplay" prefHeight="53.0" prefWidth="183.0" text="Pick a planet" />
-             <Label fx:id="hostStarNameDisplay" prefHeight="53.0" prefWidth="215.0" text="Pick a planet" />
+            <Hyperlink prefHeight="69.0" prefWidth="135.0" text="Hyperlink" />
+             <Label fx:id="statusLabel1" prefHeight="38.0" prefWidth="579.0" text="Status 1" />
+            <Label fx:id="planetNameLabel" prefHeight="49.0" prefWidth="130.0" text="Planet Name:" />
+             <Label fx:id="hostStarNameDisplay" prefHeight="50.0" prefWidth="253.0" text="Pick a planet" />
+            <Label fx:id="hoststarlabel" prefHeight="49.0" prefWidth="130.0" text="Host Star Name:" />
+             <Label fx:id="planetNameDisplay" prefHeight="50.0" prefWidth="253.0" text="Pick a planet" />
          </children>
       </TextFlow>
    </top>
@@ -44,7 +55,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ScatterChart layoutY="-2.0" prefHeight="348.0" prefWidth="436.0">
+                  <ScatterChart fx:id="scatterChart" layoutY="-2.0" prefHeight="348.0" prefWidth="436.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -56,21 +67,22 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="435.0">
                <children>
-                  <BarChart layoutY="-2.0" prefHeight="347.0" prefWidth="500.0">
+                  <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
+                  <StackedAreaChart prefHeight="302.0" prefWidth="294.0" fx:id="stackedAreaChart">
                     <xAxis>
-                      <CategoryAxis side="BOTTOM" />
+                      <NumberAxis side="BOTTOM" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis side="LEFT" />
                     </yAxis>
-                  </BarChart>
+                  </StackedAreaChart>
                </children>
             </AnchorPane>
         </items>
       </SplitPane>
    </right>
    <left>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="286.0" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="splitpaneLeft" dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="286.0" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>

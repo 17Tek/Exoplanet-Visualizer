@@ -1,0 +1,37 @@
+Exoplanet Notes
+
+------------------------------------------------------------------------------------------------------------------------
+Overview:
+
+This project is meant to show a fun and interactive analysis of chosen exo planets
+
+Functionalities include
+- Comparing exoplanets to planets in our solar system
+- A visual display of the theoretical orbit around the exoplanets host star, also displaying any of the other exo planets that might be in that system
+- Charts displaying facts and aggregated data about the planets
+- A catalog of exoplanets that are viewable in the program that come from NASAs exoplanet catalog
+- Sliders and buttons that can change the display analysis
+------------------------------------------------------------------------------------------------------------------------
+Canvas Tool for painting the planets
+
+- I found that I could use canvas to better display the positions of the planets and draw orbits using values from the DB
+- This made the center display much more fun and gave me a lot more control to design the planets since canvas allows for easier changes to the objects
+- I looked up how to override the background image to just process and put the planets and stars right on to the background
+
+------------------------------------------------------------------------------------------------------------------------
+
+New SQL concept learned:
+
+SQL ->  ?
+
+- In SQL "?" is used as a place holder to safely input a param into the query,
+it goes in order, if you need multiple params then you can just put multiple variables at the end of the query in order
+
+for example:
+"SELECT * FROM table WHERE hostname = ? AND radius > ?"
+jdbcTemplate.query(SQL, rowMapper, hostStar, minRadius);
+
+------------------------------------------------------------------------------------------------------------------------
+
+New Spring Concepts
+

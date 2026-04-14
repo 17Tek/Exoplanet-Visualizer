@@ -9,7 +9,7 @@ import java.util.List;
 
 
 //Contains all the SQL queries
-//Purposely not using JPA so that I can manually write the SQL
+//Purposely not using JPA or creating a large object so that I can manually write the SQL
 
 @Repository
 public class ExoplanetRepository
@@ -20,12 +20,34 @@ public class ExoplanetRepository
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public List<Exoplanet> getPlanetDiscoveryInfo(String planetName){
+        String SQL = "SELECT discovery_method, disc_year FROM exoplanet_dataset WHERE planet_name = ?";
+        return jdbcTemplate.query(SQL, rowMapper, planetName);
+    }
 
-    //TODO get all planets within a distinct system with the same host stars
+    //Todo get planet radius earth
+    public Double findPlanetRadius(String planetName){
+        String SQL = "SELECT planet_radius_earth FROM exoplanet_dataset WHERE planet_name = ?";
+        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
+    }
 
+    //todo semi major axis au
+    public Double findSemiMajorAxisAu(String planetName){
+        String SQL = "SELECT semi_major_axis_au FROM exoplanet_dataset WHERE planet_name = ?";
+        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
+    }
 
-    //TODO get if system is multiplanet
+    //todo star radius sun
+    public Double findStarRadiusSun(String planetName){
+        String SQL = "SELECT star_radius_sun FROM exoplanet_dataset WHERE planet_name = ?";
+        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
+    }
 
+    //todo star temp k
+    public Double findStarTempK(String planetName){
+        String SQL = "SELECT star_temp_k FROM exoplanet_dataset WHERE planet_name = ?";
+        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
+    }
 
     //TODO planet find radius
     public Double findRadiusByPlanetName(String planetName)
@@ -34,17 +56,18 @@ public class ExoplanetRepository
         return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
     }
 
-    //Retrieves a distinct list of the all the possible host stars in the database
-    public List<String> findAllDistinctHostStars() {
-        String SQL = "SELECT DISTINCT host_star FROM exoplanet_dataset ORDER BY host_star ASC";
-        return jdbcTemplate.queryForList(SQL, String.class);
+    //Todo find by host star
+    public List<Exoplanet> findByHostStar(String hostStar){
+        String SQL = "SELECT * FROM exoplanet_dataset WHERE host_star = ?";
+        return jdbcTemplate.query(SQL, rowMapper, hostStar);
     }
 
-    //Create a list of all data from the exoplanets
-    public List<Exoplanet> findAllExoplanets(){
-        String SQL = "Select * FROM exoplanet_dataset";
-        return jdbcTemplate.query(SQL, rowMapper);
+    public Exoplanet findRandomPlanet(){ //This orders the rows randomly and then limit one just picks the first one after the random order
+        String SQL = "SELECT * FROM exoplanet_dataset ORDER BY RANDOM() LIMIT 1";
+        return jdbcTemplate.queryForObject(SQL, rowMapper);
     }
+
+
 
 
 }

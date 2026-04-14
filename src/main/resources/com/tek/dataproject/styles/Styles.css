@@ -1,0 +1,55 @@
+.root {
+    -fx-background-color: #0a0e27;
+    -fx-font-family: "Segoe UI";
+}
+
+/*#slider1*/
+
+/*#slider2*/
+
+/*#button2*/
+
+/*#progressBar*/
+
+/*#toggleButton*/
+
+/*#generateRandomPlanet*/
+
+/*#progressIndicator*/
+
+/*#choiceBox*/
+
+/*#stackedAreaChart*/
+
+
+#planetNameDisplay {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#hostStarNameDisplay{
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#planetNameLabel{
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#hoststarlabel{
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#scatterChart{
+    -fx-background-color: grey;
+}
+
+#splitpaneLeft{
+    -fx-background-color: grey;
+}
