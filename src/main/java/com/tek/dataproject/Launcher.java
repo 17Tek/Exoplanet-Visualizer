@@ -10,7 +10,7 @@ public class Launcher {
 
     public static void main(String[] args) {
         context = new AnnotationConfigApplicationContext(DatabaseConfiguration.class);
-        Application.launch(DashboardController.class, args);
+        Application.launch(AppLauncher.class, args);
 
     }
 }

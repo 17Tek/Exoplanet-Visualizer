@@ -34,18 +34,6 @@ public class ExoplanetRepository
         return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     //Retrieves a distinct list of the all the possible host stars in the database
     public List<String> findAllDistinctHostStars() {
         String SQL = "SELECT DISTINCT host_star FROM exoplanet_dataset ORDER BY host_star ASC";
