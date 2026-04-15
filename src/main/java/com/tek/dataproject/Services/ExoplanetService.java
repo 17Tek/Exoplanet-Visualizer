@@ -29,8 +29,15 @@ public class ExoplanetService {
          return repository.findRandomPlanet();
     }
 
+    public String processLinkForPlanet(Exoplanet exoplanet){
+        String exoplanetName = exoplanet.planetName();
+        return "https://science.nasa.gov/exoplanet-catalog/"+ exoplanetName.toLowerCase().replace(" ","-") +"/";
+    }
+
+    //derives the time and distances for the bar chart, used the measurements commented below
     public Map<String, Double> travelTimes(Exoplanet planet){
 
+        if (planet.distFromEarthPc() == null) return new LinkedHashMap<>();
         double distPC = planet.distFromEarthPc();
 
         double distLightYears = distPC * 3.26156;
@@ -61,7 +68,6 @@ public class ExoplanetService {
         30.86 trillion kilometers (km)
         19.17 trillion miles (miles)
         206,265 Astronomical Units (AU)
-
 
         Voyager 1 — 17 km/s
         New Horizons — 13.8 km/s

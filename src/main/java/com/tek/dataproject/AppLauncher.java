@@ -1,5 +1,6 @@
 package com.tek.dataproject;
 
+import com.tek.dataproject.FXMLControllers.DashboardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,6 +27,10 @@ public class AppLauncher extends Application {
         );
         loader.setControllerFactory(springContext::getBean);
         Scene scene = new Scene(loader.load(), 1440, 820);
+
+        DashboardController controller = loader.getController();
+        controller.setHostServices(getHostServices());
+
         stage.setMaximized(true);
         stage.setTitle("Exoplanet Analyzer");
         stage.setScene(scene);

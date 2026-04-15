@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="863.0" prefWidth="1493.0" style="-fx-background-color: #0a0e27" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1451.0" style="-fx-background-color: #0a0e27" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
    <bottom>
       <ButtonBar prefHeight="162.0" prefWidth="1493.0" BorderPane.alignment="CENTER">
          <buttons>
             <ProgressBar fx:id="progressBar" prefHeight="51.0" prefWidth="200.0" progress="0.0" />
-            <Slider fx:id="slider1" orientation="VERTICAL" />
-            <Slider fx:id="slider2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="162.0">
+            <Slider fx:id="slider1" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="114.0" />
+            <Slider fx:id="slider2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="63.0" orientation="VERTICAL" prefHeight="114.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -23,14 +23,14 @@
             <ProgressIndicator fx:id="progressIndicator" prefHeight="205.0" progress="0.0" />
             <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
             <Button fx:id="generateRandomPlanet" mnemonicParsing="false" onAction="#handleRandomPlanet" text="Random Planet" />
-            <Button fx:id="button2" mnemonicParsing="false" text="Button" />
+            <Button fx:id="button2" mnemonicParsing="false" prefHeight="23.0" text="Button" />
          </buttons>
       </ButtonBar>
    </bottom>
     <center>
         <StackPane fx:id="systemPane">
          <children>
-               <ImageView fitHeight="620.0" fitWidth="1185.0" preserveRatio="false">
+               <ImageView fitHeight="554.0" fitWidth="872.0" preserveRatio="false">
                    <image>
                        <Image url="@images/MainPanel.jpg" />
                    </image>
@@ -39,14 +39,14 @@
         </StackPane>
     </center>
    <top>
-      <TextFlow prefHeight="88.0" prefWidth="1490.0" BorderPane.alignment="CENTER">
+      <TextFlow prefHeight="112.0" prefWidth="1451.0" BorderPane.alignment="CENTER">
          <children>
-            <Hyperlink prefHeight="69.0" prefWidth="135.0" text="Hyperlink" />
-             <Label fx:id="statusLabel1" prefHeight="38.0" prefWidth="579.0" text="Status 1" />
-            <Label fx:id="planetNameLabel" prefHeight="49.0" prefWidth="130.0" text="Planet Name:" />
-             <Label fx:id="hostStarNameDisplay" prefHeight="50.0" prefWidth="253.0" text="Pick a planet" />
+            <Label fx:id="urlLabel" prefHeight="35.0" prefWidth="106.0" text="Label" />
+            <Hyperlink fx:id="hyperLink" prefHeight="33.0" prefWidth="451.0" text="Hyperlink" />
+            <Label fx:id="planetNameLabel" prefHeight="44.0" prefWidth="107.0" text="Planet Name:" />
+             <Label fx:id="planetNameDisplay" prefHeight="46.0" prefWidth="254.0" text="Pick a planet" />
             <Label fx:id="hoststarlabel" prefHeight="49.0" prefWidth="130.0" text="Host Star Name:" />
-             <Label fx:id="planetNameDisplay" prefHeight="50.0" prefWidth="253.0" text="Pick a planet" />
+             <Label fx:id="hostStarNameDisplay" prefHeight="51.0" prefWidth="147.0" text="Pick a planet" />
          </children>
       </TextFlow>
    </top>
@@ -68,13 +68,13 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="435.0">
                <children>
                   <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
-                  <BarChart prefHeight="305.0" prefWidth="295.0" fx:id="barChart">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
+                  <BarChart fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
+                      <xAxis>
+                          <CategoryAxis tickLabelRotation="45" />
+                      </xAxis>
+                      <yAxis>
+                          <NumberAxis label="Years" tickLabelRotation="0" />
+                      </yAxis>
                   </BarChart>
                </children>
             </AnchorPane>

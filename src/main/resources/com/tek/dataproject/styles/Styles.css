@@ -3,23 +3,67 @@
     -fx-font-family: "Segoe UI";
 }
 
-/*#slider1*/
+/*--------------------------------------------------------- */
+#slider2 .track {
+    -fx-background-color: #EF6400;
+}
 
-/*#slider2*/
+#slider2 .thumb {
+    -fx-background-color: white;
+}
+/*--------------------------------------------------------- */
 
-/*#button2*/
+#button2 {
+    -fx-background-color: #EF6400;
+    -fx-text-fill: white;
+}
 
-/*#progressBar*/
+/*--------------------------------------------------------- */
+#progressBar .track {
+    -fx-background-color: #333333;
+}
 
-/*#toggleButton*/
+#progressBar .bar {
+    -fx-background-color: #EF6400;
+}
 
-/*#generateRandomPlanet*/
+/*--------------------------------------------------------- */
+#toggleButton{
+    -fx-background-color: #c25100;
+}
 
-/*#progressIndicator*/
+#toggleButton:selected{
+    -fx-background-color: #EF6400;
+    -fx-text-fill: white;
+}
 
-/*#choiceBox*/
+#generateRandomPlanet{
+    -fx-fill-width: #EF6400FF;
+}
 
-/*#stackedAreaChart*/
+#progressIndicator{
+
+}
+
+#choiceBox{
+    -fx-fill: #EF6400FF;
+}
+
+#stackedAreaChart{
+    -fx-fill: #EF6400FF;
+}
+
+#urlLabel{
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#hyperLink{
+    -fx-text-fill: #20bfff;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
 
 
 #planetNameDisplay {

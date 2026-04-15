@@ -33,5 +33,6 @@ jdbcTemplate.query(SQL, rowMapper, hostStar, minRadius);
 
 ------------------------------------------------------------------------------------------------------------------------
 
-New Spring Concepts
+Host service to open the browser on clicking the link
+
 
