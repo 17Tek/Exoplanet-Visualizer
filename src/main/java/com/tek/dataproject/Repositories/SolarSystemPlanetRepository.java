@@ -1,10 +1,13 @@
 package com.tek.dataproject.Repositories;
 
+import com.tek.dataproject.TableRecord.Exoplanet;
 import com.tek.dataproject.TableRecord.SolarSystemPlanet;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class SolarSystemPlanetRepository
@@ -15,6 +18,13 @@ public class SolarSystemPlanetRepository
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
+    public SolarSystemPlanet comparePlanetsResult(Exoplanet exoplanet) {
+        String SQL = "SELECT s.* FROM solarsystem_dataset s " +
+                "CROSS JOIN exoplanet_dataset e " +
+                "WHERE e.planet_name = ? " +
+                "ORDER BY ABS(s.radius - e.planet_radius_earth) " +
+                "LIMIT 1";
+        return jdbcTemplate.queryForObject(SQL, rowMapper, exoplanet.planetName());
+    }
 
 }

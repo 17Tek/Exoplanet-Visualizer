@@ -10,7 +10,9 @@ import java.util.List;
 public class CenterPanelService
 {
 
-    public void drawSystem(GraphicsContext gc, List<Exoplanet> planets, double width, double height) {
+    public void drawSystem(GraphicsContext gc, List<Exoplanet> planets, double width, double height, String generatedPlanetName) {
+
+        //TODO fix all of the gap bugs and the size bugs
 
         if (planets.isEmpty()) return; //edge case check
 
@@ -20,7 +22,7 @@ public class CenterPanelService
         //where to start on the canvas
         int startStar = 60;
         //checks if the row pulls contains a radius value, if it does it set it to whatever the measurment is and then gives it a minimum value so that it is always visible
-        double starRadius = (first.starRadiusSun() != null) ? first.starRadiusSun() * 20 : 20;
+        double starRadius = (first.starRadiusSun() != null) ? first.starRadiusSun() * 50 : 20;
         starRadius = Math.min(starRadius, height * 0.35);
         double centerY = height / 2; //center of the canvas
 
@@ -34,19 +36,22 @@ public class CenterPanelService
 
             //This is the math to determine spacing and size of each given planet, using ternary to find edge cases and handle them
             double planetSize = (planet.planetRadiusEarth() != null) ? Math.max(6, planet.planetRadiusEarth() * 8) : 6;
-            double planetX = (planet.semiMajorAxisAu() != null) ? 200 + planet.semiMajorAxisAu() * 300 : 200 + i * 120;
+            double planetX = (planet.semiMajorAxisAu() != null) ? 200 + planet.semiMajorAxisAu() * 100 : 200 + i * 120;
             planetX = Math.max(planetX, 200 + i * (planetSize + 20));
 
             // base color
             gc.setFill(getPlanetColor(planet.planetType()));
             gc.fillOval(planetX, centerY - planetSize / 2, planetSize, planetSize);
+            if (planet.planetName().equals(generatedPlanetName)) {
+                gc.setStroke(Color.WHITE);
+                gc.setLineWidth(1);
+                gc.strokeText(planet.planetName(), planetX, centerY - planetSize / 2 - 8);
+            }
 
             //planet orbit art
             double starCenter = startStar + starRadius;
             drawOrbit(gc, starCenter, centerY, planetX, planet.planetRadiusEarth());
         }
-
-
     }
 
     public void drawOrbit(GraphicsContext gc, double starCenter, double center,double planetX, double planetRadius){
@@ -66,13 +71,13 @@ public class CenterPanelService
             return Color.RED;
         }
         if(starTemp < 5200){
-            return Color.ORANGE;
+            return Color.DARKORANGE;
         }
         if(starTemp < 6000){
             return Color.YELLOW;
         }
         if(starTemp < 10000){
-            return Color.WHITE;
+            return Color.LIGHTYELLOW;
         }
         if(starTemp < 30000){
             return Color.DEEPSKYBLUE;
@@ -95,7 +100,7 @@ public class CenterPanelService
                 case "Neptune-like" -> Color.CORNFLOWERBLUE;
                 case "Super Earth" -> Color.LIGHTGREEN;
                 case "Terrestrial" -> Color.TAN;
-                default -> Color.LIGHTGRAY;
+                default -> Color.LIGHTBLUE;
             };
         }
     }

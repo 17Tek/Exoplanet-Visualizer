@@ -38,7 +38,8 @@
 }
 
 #generateRandomPlanet{
-    -fx-fill-width: #EF6400FF;
+    -fx-background-color: #EF6400;
+    -fx-text-fill: white;
 }
 
 #progressIndicator{

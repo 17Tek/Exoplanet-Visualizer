@@ -17,10 +17,6 @@ public class ExoplanetService {
         this.repository = repository;
     }
 
-    public List<Exoplanet> getSystemFor(String hostStar) {
-        return repository.findByHostStar(hostStar);
-    }
-
     public List<Exoplanet> findHostStar(String hostStar) {
         return repository.findByHostStar(hostStar);
     }

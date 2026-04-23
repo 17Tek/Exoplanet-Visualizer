@@ -20,38 +20,13 @@ public class ExoplanetRepository
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Exoplanet> getPlanetDiscoveryInfo(String planetName){
-        String SQL = "SELECT discovery_method, disc_year FROM exoplanet_dataset WHERE planet_name = ?";
-        return jdbcTemplate.query(SQL, rowMapper, planetName);
-    }
-
-    //Todo get planet radius earth
-    public Double findPlanetRadius(String planetName){
-        String SQL = "SELECT planet_radius_earth FROM exoplanet_dataset WHERE planet_name = ?";
-        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
-    }
-
-    //todo semi major axis au
-    public Double findSemiMajorAxisAu(String planetName){
-        String SQL = "SELECT semi_major_axis_au FROM exoplanet_dataset WHERE planet_name = ?";
-        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
-    }
-
-    //todo star radius sun
-    public Double findStarRadiusSun(String planetName){
-        String SQL = "SELECT star_radius_sun FROM exoplanet_dataset WHERE planet_name = ?";
-        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
-    }
-
-    //todo star temp k
-    public Double findStarTempK(String planetName){
-        String SQL = "SELECT star_temp_k FROM exoplanet_dataset WHERE planet_name = ?";
-        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
+    public List<Exoplanet> findByMostPlanets(){
+        String SQL ="SELECT host_star FROM exoplanet_dataset WHERE  ";
+        return jdbcTemplate.query(SQL, rowMapper);
     }
 
     //TODO planet find radius
-    public Double findRadiusByPlanetName(String planetName)
-    {
+    public Double findRadiusByPlanetName(String planetName){
         String SQL = "SELECT planet_radius_earth FROM exoplanet_dataset WHERE planet_name = ?";
         return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
     }
@@ -66,9 +41,6 @@ public class ExoplanetRepository
         String SQL = "SELECT * FROM exoplanet_dataset ORDER BY RANDOM() LIMIT 1";
         return jdbcTemplate.queryForObject(SQL, rowMapper);
     }
-
-
-
 
 }
 

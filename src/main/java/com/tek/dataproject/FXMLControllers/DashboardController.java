@@ -8,17 +8,19 @@ import com.tek.dataproject.TableRecord.Exoplanet;
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Label;
+
 import java.util.*;
 
 @Component
@@ -39,6 +41,8 @@ public class DashboardController {
     @FXML private BarChart<String, Number> barChart;
     @FXML private Hyperlink hyperLink;
     @FXML private Label urlLabel;
+    @FXML private ScrollPane scrollPane;
+    @FXML private StackedAreaChart <String, Number> stackedAreaChart;
 
     //This is a java fx class needed to bridge the app and the operating system, allowing me to open the document with whatever the default is
     private HostServices hostServices;
@@ -52,7 +56,7 @@ public class DashboardController {
     public void initialize() {
         Platform.runLater(() -> {
             try {
-                renderSystem("Proxima Cen");
+                renderSystem("Proxima Cen", null);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -60,7 +64,7 @@ public class DashboardController {
     }
 
     //This will generate the canvas images based on the system that the exoplanet is from
-    public void renderSystem(String hostStar) {
+    public void renderSystem(String hostStar, String planetName) {
         systemPane.getChildren().removeIf(node -> !(node instanceof ImageView)); //This will make sure that the gc will be in front of everything
 
         List<Exoplanet> planets = exoplanetService.findHostStar(hostStar);
@@ -71,28 +75,69 @@ public class DashboardController {
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        centerPanelService.drawSystem(gc, planets, width, height);
+        centerPanelService.drawSystem(gc, planets, width, height, planetName);
 
         systemPane.getChildren().add(canvas);
     }
 
     @FXML //This method will handle the action of the random planet button producing a planet with the list of all the necessary values from the Repository
-    public void handleRandomPlanet() {
+    public void handleRandomPlanet() throws Exception{
         Exoplanet planet = exoplanetService.findRandomPlanet();
         selectPlanet(planet);
     }
 
     //This method will handle things like labeling the planets title and host star, along with calling render system, and creating the hyperLink
-    public void selectPlanet(Exoplanet planet) {
-        planetNameDisplay.setText(planet.planetName());
-        hostStarNameDisplay.setText(planet.hostStar());
-        renderSystem(planet.hostStar());
-        setBarChart(exoplanetService.travelTimes(planet));
+    public void selectPlanet(Exoplanet planet) throws Exception{
+        try {
+            planetNameDisplay.setText(planet.planetName());
+            hostStarNameDisplay.setText(planet.hostStar());
+            renderSystem(planet.hostStar(), planet.planetName());
+            setBarChart(exoplanetService.travelTimes(planet));
+            setStackedAreaChart(exoplanetService.findHostStar(planet.hostStar()));
 
-        String url = exoplanetService.processLinkForPlanet(planet);
-        hyperLink.setOnAction(e -> hostServices.showDocument(url));
-        hyperLink.setText(url);
-        urlLabel.setText("Link to NASA:");
+            String url = exoplanetService.processLinkForPlanet(planet);
+            hyperLink.setOnAction(e -> hostServices.showDocument(url));
+            hyperLink.setText(url);
+            urlLabel.setText("Link to NASA:");
+        } catch (Exception e){  //This clears up almost every exception that could come up, just finds a new random planet if anything goes wrong
+            System.out.println(e.getMessage());
+            handleRandomPlanet();
+        }
+
+    }
+
+    public void setStackedAreaChart(List<Exoplanet> planets){
+        stackedAreaChart.getData().clear();
+
+        // Sort by AU, nulls go to end
+        List<Exoplanet> sorted = planets.stream()
+                .sorted(Comparator.comparingDouble(p -> p.semiMajorAxisAu() != null ? p.semiMajorAxisAu() : 0.0))
+                .collect(java.util.stream.Collectors.toList());
+
+        XYChart.Series<String, Number> radiusSeries = new XYChart.Series<>();
+        radiusSeries.setName("Radius (Earth = 1)");
+
+        XYChart.Series<String, Number> massSeries = new XYChart.Series<>();
+        massSeries.setName("Mass (Earth = 1)");
+
+        // Inject Earth at 1.0 AU as reference
+        radiusSeries.getData().add(new XYChart.Data<>("Earth (1.0 AU)", 1.0));
+        massSeries.getData().add(new XYChart.Data<>("Earth (1.0 AU)", 1.0));
+
+        for (Exoplanet p : sorted) {
+            String label = p.planetName() + " (" + p.semiMajorAxisAu() + " AU)";
+            radiusSeries.getData().add(new XYChart.Data<>(label, p.planetRadiusEarth() != null ? p.planetRadiusEarth() : 1.0));
+            massSeries.getData().add(new XYChart.Data<>(label, p.planetMassEarth() != null ? p.planetMassEarth() : 1.0));
+        }
+
+        stackedAreaChart.getData().addAll(radiusSeries, massSeries);
+    }
+
+
+    public void setScrollPane(List<Exoplanet> exoplanetList){
+
+        VBox scrollVbox = new VBox(5);
+        
     }
 
     //This method uses an external library to add the values to the FXML bar chart, it uses a logarithmic scaling to have the graph be more understandable //TODO fix the ui and simplify
