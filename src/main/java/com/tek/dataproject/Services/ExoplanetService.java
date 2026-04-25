@@ -3,7 +3,6 @@ package com.tek.dataproject.Services;
 import com.tek.dataproject.Repositories.ExoplanetRepository;
 import com.tek.dataproject.TableRecord.Exoplanet;
 import org.springframework.stereotype.Service;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,10 +38,8 @@ public class ExoplanetService {
         double distLightYears = distPC * 3.26156;
         double distKm = distPC * 3.086e13;
         double secondsYear = 31557600;
-
         double speedNewHorizons= 13.8;//km/s
         double speedVoyager = 17;//km/s
-
         double voyagerYears = distKm / speedVoyager /secondsYear;
         double newHorizonsYears = distKm / speedNewHorizons / secondsYear;
         double onePercentLightYears = distLightYears * 100;
@@ -71,9 +68,4 @@ public class ExoplanetService {
         Light Speed — 299,792 km/s
      */
     }
-
-
-
-
-
 }
