@@ -18,5 +18,4 @@ public class SolarSystemPlanetService
     public SolarSystemPlanet compare(Exoplanet exoplanet){
         return repository.comparePlanetsResult(exoplanet);
     }
-
 }

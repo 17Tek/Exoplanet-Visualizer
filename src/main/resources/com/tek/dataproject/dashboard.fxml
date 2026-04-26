@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1451.0" style="-fx-background-color: #0a0e27" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
+<BorderPane prefHeight="824.0" prefWidth="1451.0" styleClass="root-dashboard" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
+
    <bottom>
       <ButtonBar prefHeight="162.0" prefWidth="1493.0" BorderPane.alignment="CENTER">
          <buttons>
@@ -39,7 +40,7 @@
         </StackPane>
     </center>
    <top>
-      <TextFlow prefHeight="112.0" prefWidth="1451.0" BorderPane.alignment="CENTER">
+      <TextFlow prefHeight="112.0" prefWidth="1152.0" styleClass="TopPanel" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="urlLabel" prefHeight="35.0" prefWidth="106.0" text="Label" />
             <Hyperlink fx:id="hyperLink" prefHeight="33.0" prefWidth="451.0" text="Hyperlink" />
@@ -51,7 +52,7 @@
       </TextFlow>
    </top>
    <right>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="296.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="296.0" styleClass="SplitPane" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -82,14 +83,18 @@
       </SplitPane>
    </right>
    <left>
-      <VBox prefHeight="550.0" prefWidth="287.0" BorderPane.alignment="CENTER">
+       <VBox prefHeight="604.0" prefWidth="283.0" spacing="10.0" styleClass="leftVbox" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="scrollPane" prefHeight="559.0" prefWidth="287.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="548.0" prefWidth="287.0" />
-              </content>
-            </ScrollPane>
-         </children>
-      </VBox>
+
+             <Label prefHeight="38.0" prefWidth="296.0" styleClass="filterTitle" text="Filters:" />
+             <Label text="Planet Type" styleClass="filterLabel" />
+             <ComboBox prefWidth="150.0" fx:id="planetTypeComboBox" styleClass="filterBox" />
+             <Label text="Discovery Method" styleClass="filterLabel" />
+             <ComboBox prefWidth="150.0" fx:id="discoveryMethodComboBox" styleClass="filterBox" />
+             <ToggleButton mnemonicParsing="false" text="Habitable" fx:id="habitableToggle" styleClass="smallToggle" />
+             <Button mnemonicParsing="false" text="Apply Filters" fx:id="applyFiltersButton" styleClass="orangeButton" />
+             <Button mnemonicParsing="false" text="Clear Filters" fx:id="clearFiltersButton" styleClass="darkButton" />
+
+         </children></VBox>
    </left>
 </BorderPane>

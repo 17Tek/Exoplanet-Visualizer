@@ -34,15 +34,31 @@ public class DashboardController {
 
     //The connection to the actual ui fields that are interactive with the backend
     //FXML makes sure that javaFX injects the values when it loads the fxml
+
+    @FXML private TextField starSearchField;
     @FXML private Label statusLabel1;
+
+    //top planet and system display
     @FXML private Label planetNameDisplay;
     @FXML private Label hostStarNameDisplay;
     @FXML private StackPane systemPane;
-    @FXML private BarChart<String, Number> barChart;
     @FXML private Hyperlink hyperLink;
     @FXML private Label urlLabel;
-    @FXML private ScrollPane scrollPane;
+
+    //split pane fxml with the charts
     @FXML private StackedAreaChart <String, Number> stackedAreaChart;
+    @FXML private BarChart<String, Number> barChart;
+
+    //Left Vbox FXML
+    @FXML private TextField planetSearchField;
+    @FXML private ComboBox<String> planetTypeComboBox;
+    @FXML private ComboBox<String> discoveryMethodComboBox;
+    @FXML private ToggleButton habitableToggle;
+    @FXML private ToggleButton recentToggle;
+    @FXML private Button applyFiltersButton;
+    @FXML private Button clearFiltersButton;
+    @FXML private Label resultsCountLabel;
+
 
     //This is a java fx class needed to bridge the app and the operating system, allowing me to open the document with whatever the default is
     private HostServices hostServices;
@@ -56,12 +72,14 @@ public class DashboardController {
     public void initialize() {
         Platform.runLater(() -> {
             try {
-                renderSystem("Proxima Cen", null);
+                renderSystem("Sun", null);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
+
+
 
     //This will generate the canvas images based on the system that the exoplanet is from
     public void renderSystem(String hostStar, String planetName) {
