@@ -29,6 +29,11 @@ public class ExoplanetService {
         return "https://science.nasa.gov/exoplanet-catalog/"+ exoplanetName.toLowerCase().replace(" ","-") +"/";
     }
 
+    public List<Exoplanet> searchWithFilters(String selectedPlanetType, String selectedDiscoveryMethod, Boolean habitableOnly){
+        return repository.findByFilters(selectedPlanetType, selectedDiscoveryMethod, habitableOnly);
+    }
+
+
     //derives the time and distances for the bar chart, used the measurements commented below
     public Map<String, Double> travelTimes(Exoplanet planet){
 

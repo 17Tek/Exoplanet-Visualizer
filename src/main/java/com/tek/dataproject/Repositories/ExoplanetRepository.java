@@ -21,6 +21,12 @@ public class ExoplanetRepository
     }
 
 
+    public List<Exoplanet> findByFilters(String selectedPlanetType, String selectedDiscoveryMethod, Boolean habitableOnly) {
+
+        String SQL = "SELECT * FROM exoplanet_dataset WHERE (CAST(? AS varchar) IS NULL OR planet_type = ?) AND (CAST(? AS varchar) IS NULL OR discovery_method = ?) AND (CAST(? AS boolean) IS NULL OR habitable_zone_flag = ?)";
+
+        return jdbcTemplate.query(SQL, rowMapper, selectedPlanetType, selectedPlanetType, selectedDiscoveryMethod, selectedDiscoveryMethod, habitableOnly, habitableOnly);
+    }
 
     public List<Exoplanet> findByMostPlanets(){
         String SQL ="SELECT host_star FROM exoplanet_dataset WHERE  ";

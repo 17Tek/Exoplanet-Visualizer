@@ -35,9 +35,6 @@ public class DashboardController {
     //The connection to the actual ui fields that are interactive with the backend
     //FXML makes sure that javaFX injects the values when it loads the fxml
 
-    @FXML private TextField starSearchField;
-    @FXML private Label statusLabel1;
-
     //top planet and system display
     @FXML private Label planetNameDisplay;
     @FXML private Label hostStarNameDisplay;
@@ -70,6 +67,7 @@ public class DashboardController {
     // since i'm using canvas for the design of the planets I need to render the system after javafx finishes laying out the scene, without it the canvas cannot draw anything
     @FXML
     public void initialize() {
+        setupComboBoxes();
         Platform.runLater(() -> {
             try {
                 renderSystem("Sun", null);
@@ -79,11 +77,54 @@ public class DashboardController {
         });
     }
 
+    private void setupComboBoxes() {
+        planetTypeComboBox.getItems().addAll("All Types", "Rocky", "Gas Giant", "Super Earth");
+        planetTypeComboBox.setValue("All Types");
+        discoveryMethodComboBox.getItems().addAll("All Methods", "Transit", "Radial Velocity", "Imaging");
+        discoveryMethodComboBox.setValue("All Methods");
+    }
+
+    @FXML //uses the filters
+    private void handleApplyFilters() throws Exception{
+        //this data will be used to search for a possible valid planet
+        String selectedPlanetType = planetTypeComboBox.getValue();
+        String selectedDiscoveryMethod = discoveryMethodComboBox.getValue();
+        if ("All Types".equals(selectedPlanetType)) {
+            selectedPlanetType = null;
+        }
+
+        if ("All Methods".equals(selectedDiscoveryMethod)) {
+            selectedDiscoveryMethod = null;
+        }
+
+        Boolean habitableOnly = habitableToggle.isSelected() ? true : null;
+
+        List<Exoplanet> results = exoplanetService.searchWithFilters(
+                selectedPlanetType,
+                selectedDiscoveryMethod,
+                habitableOnly
+        );
+
+        System.out.println("Filtered results: " + results.size());
+
+        if (results.isEmpty()) {
+            return;
+        }
+
+        selectPlanet(results.get(0));
+    }
+
+    @FXML //clears all the values to null when called
+    private void handleClearFilters(){
+        String selectedPlanetType = null;
+        String selectedDiscoveryMethod = null;
+        boolean habitableOnly = false;
+    }
 
 
     //This will generate the canvas images based on the system that the exoplanet is from
     public void renderSystem(String hostStar, String planetName) {
-        systemPane.getChildren().removeIf(node -> !(node instanceof ImageView)); //This will make sure that the gc will be in front of everything
+        systemPane.getChildren().removeIf(node -> node instanceof Canvas); //This will make sure that the gc will be in front of everything
 
         List<Exoplanet> planets = exoplanetService.findHostStar(hostStar);
 
@@ -91,6 +132,7 @@ public class DashboardController {
         double height = systemPane.getHeight();
 
         Canvas canvas = new Canvas(width, height);
+        canvas.setManaged(false);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         centerPanelService.drawSystem(gc, planets, width, height, planetName);
@@ -117,11 +159,11 @@ public class DashboardController {
             hyperLink.setOnAction(e -> hostServices.showDocument(url));
             hyperLink.setText(url);
             urlLabel.setText("Link to NASA:");
+
         } catch (Exception e){  //This clears up almost every exception that could come up, just finds a new random planet if anything goes wrong
             System.out.println(e.getMessage());
             handleRandomPlanet();
         }
-
     }
 
     public void setStackedAreaChart(List<Exoplanet> planets){
@@ -151,12 +193,6 @@ public class DashboardController {
         stackedAreaChart.getData().addAll(radiusSeries, massSeries);
     }
 
-
-    public void setScrollPane(List<Exoplanet> exoplanetList){
-
-        VBox scrollVbox = new VBox(5);
-        
-    }
 
     //This method uses an external library to add the values to the FXML bar chart, it uses a logarithmic scaling to have the graph be more understandable //TODO fix the ui and simplify
     public void setBarChart(Map<String, Double> travelTimes) {
