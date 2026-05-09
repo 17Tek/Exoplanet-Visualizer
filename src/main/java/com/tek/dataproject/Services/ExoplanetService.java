@@ -38,29 +38,30 @@ public class ExoplanetService {
     public Map<String, Double> travelTimes(Exoplanet planet){
 
         if (planet.distFromEarthPc() == null) return new LinkedHashMap<>();
-        double distPC = planet.distFromEarthPc();
+        double distanceParsecs = planet.distFromEarthPc();
 
-        double distLightYears = distPC * 3.26156;
-        double distKm = distPC * 3.086e13;
-        double secondsYear = 31557600;
-        double speedNewHorizons= 13.8;//km/s
-        double speedVoyager = 17;//km/s
-        double voyagerYears = distKm / speedVoyager /secondsYear;
-        double newHorizonsYears = distKm / speedNewHorizons / secondsYear;
-        double onePercentLightYears = distLightYears * 100;
+        double distanceLightYears = distanceParsecs * 3.26156;
+        double distanceKm = distanceParsecs * 3.086e13;
+        double secondsPerYear = 31557600;
+
+        double newHorizonsSpeedKmPerSecond= 13.8;//km/s
+        double voyagerSpeedKmPerSecond = 17;//km/s
+        double yearsByVoyager1 = distanceKm / voyagerSpeedKmPerSecond /secondsPerYear;
+        double yearsByNewHorizons = distanceKm / newHorizonsSpeedKmPerSecond / secondsPerYear;
+        double yearsAtOnePercentLightSpeed = distanceLightYears * 100;
 
         Map<String, Double> barChartDisplayMap = new LinkedHashMap<>();
-        barChartDisplayMap.put("New Horizons", newHorizonsYears);
-        barChartDisplayMap.put("Voyager1", voyagerYears);
-        barChartDisplayMap.put("Light years", distLightYears);
-        barChartDisplayMap.put("1% of light speed", onePercentLightYears);
+        barChartDisplayMap.put("New Horizons", yearsByNewHorizons);
+        barChartDisplayMap.put("Voyager 1", yearsByVoyager1);
+        barChartDisplayMap.put("At Light Speed", distanceLightYears);
+        barChartDisplayMap.put("1% Light Speed", yearsAtOnePercentLightSpeed);
 
         return barChartDisplayMap;
 
-
-
         /* Conversion factors for one parsec
         Seconds in a year = 31557600
+
+        1 parsec ≈ 1 pc≈3.086×10 ^ 13km
 
         3.26156 light-years (ly)
         30.86 trillion kilometers (km)

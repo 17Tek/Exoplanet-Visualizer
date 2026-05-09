@@ -27,6 +27,20 @@
 /*---------------------------Bottom Button Panel------------------------------ */
 
 
+/*---------------------------Charts styels------------------------------ */
+
+.chart-axis-tick-mark {
+    -fx-stroke: white;
+}
+
+.axis-label {
+    -fx-text-fill: white;
+}
+
+.axis {
+    -fx-tick-label-fill: white;
+}
+
 
 
 /*---------------------------Center Pane------------------------------ */
@@ -190,10 +204,6 @@
     -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-}
-
-#scatterChart{
-    -fx-background-color: grey;
 }
 
 #splitpaneLeft{

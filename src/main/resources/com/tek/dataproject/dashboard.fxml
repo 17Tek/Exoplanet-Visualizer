@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="Infinity" prefWidth="Infinity" styleClass="root-dashboard" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
+<BorderPane prefHeight="768.0" prefWidth="1366.0" styleClass="root-dashboard" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
 
    <bottom>
       <ButtonBar prefHeight="162.0" prefWidth="1451.0" BorderPane.alignment="CENTER" maxWidth="Infinity">
          <buttons>
             <ProgressBar fx:id="progressBar" prefHeight="51.0" prefWidth="200.0" progress="0.0" />
             <Slider fx:id="slider1" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="114.0" />
-            <Slider fx:id="slider2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="63.0" orientation="VERTICAL" prefHeight="114.0">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </Slider>
+            <Slider fx:id="slider2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="63.0" orientation="VERTICAL" prefHeight="114.0" />
             <ProgressIndicator fx:id="progressIndicator" prefHeight="205.0" progress="0.0" />
             <Button fx:id="generateRandomPlanet" mnemonicParsing="false" onAction="#handleRandomPlanet" prefHeight="69.0" text="Random System" />
             <ToggleButton fx:id="toggleButton" mnemonicParsing="false" prefHeight="99.0" text="ToggleButton" />
@@ -29,14 +23,7 @@
       </ButtonBar>
    </bottom>
     <center>
-        <StackPane fx:id="systemPane" maxHeight="Infinity" maxWidth="Infinity">
-         <children>
-               <ImageView fitHeight="554.0" fitWidth="872.0" preserveRatio="false">
-                   <image>
-                       <Image url="@images/MainPanel.jpg" />
-                   </image>
-               </ImageView>
-         </children>
+        <StackPane fx:id="systemPane" maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-image: url('/com/tek/dataproject/images/MainPanel.jpg'); -fx-background-size: cover; -fx-background-position: center;">
         </StackPane>
     </center>
    <top>
@@ -69,12 +56,12 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="435.0">
                <children>
                   <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
-                  <BarChart fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
+                  <BarChart styleClass="barChart" fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
                       <xAxis>
                           <CategoryAxis tickLabelRotation="45" />ki
                       </xAxis>
                       <yAxis>
-                          <NumberAxis label="Years" tickLabelRotation="0" />
+                          <NumberAxis label="Travel Time (10^n Years)" tickLabelRotation="0" />
                       </yAxis>
                   </BarChart>
                </children>
