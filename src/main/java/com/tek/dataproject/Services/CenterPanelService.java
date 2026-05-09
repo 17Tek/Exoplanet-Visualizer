@@ -93,15 +93,18 @@ public class CenterPanelService
     }
 
 
-        public Color getPlanetColor(String planetType) {
-            if (planetType == null) return Color.LIGHTGRAY;
-            return switch (planetType) {
-                case "Gas Giant" -> Color.ORANGE;
-                case "Neptune like" -> Color.CORNFLOWERBLUE;
-                case "Super Earth" -> Color.LIGHTGREEN;
-                case "Terrestrial" -> Color.TAN;
-                default -> Color.LIGHTBLUE;
-            };
-        }
+    public Color getPlanetColor(String planetType) {
+        if (planetType == null) return Color.LIGHTGRAY;
+        return switch (planetType) {
+            case "Gas Giant" -> Color.ORANGE;
+            case "Super-Jupiter" -> Color.DARKORANGE;
+            case "Neptune-like" -> Color.CORNFLOWERBLUE;
+            case "Mini-Neptune" -> Color.STEELBLUE;
+            case "Super-Earth" -> Color.LIGHTGREEN;
+            case "Sub-Earth" -> Color.TAN;
+            case "Unknown" -> Color.LIGHTGRAY;
+            default -> Color.WHITE;
+        };
+    }
     }
 

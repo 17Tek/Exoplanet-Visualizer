@@ -1,5 +1,6 @@
 package com.tek.dataproject.FXMLControllers;
 
+import com.tek.dataproject.Repositories.ExoplanetRepository;
 import com.tek.dataproject.Services.CenterPanelService;
 import com.tek.dataproject.Services.ExoplanetService;
 import com.tek.dataproject.TableRecord.Exoplanet;
@@ -75,12 +76,19 @@ public class DashboardController {
         });
     }
 
-    //Gives the values for the dropdown boxes
+    //Gives the values for the dropdown boxes, and presets it to All
     private void setupComboBoxes() {
-        planetTypeComboBox.getItems().addAll("All Types", "Rocky", "Gas Giant", "Super Earth");
+        planetTypeComboBox.getItems().addAll("All Types", "Gas Giant", "Neptune-like", "Mini-Neptune", "Super-Earth", "Super-Jupiter", "Sub-Earth", "Unknown");
         planetTypeComboBox.setValue("All Types");
         discoveryMethodComboBox.getItems().addAll("All Methods", "Transit", "Radial Velocity", "Imaging");
         discoveryMethodComboBox.setValue("All Methods");
+    }
+
+    @FXML //sets the filter values back to their original preset
+    private void handleClearFilters(){
+        planetTypeComboBox.setValue("All Types");
+        discoveryMethodComboBox.setValue("All Methods");
+        habitableToggle.setSelected(false);
     }
 
     @FXML //uses the filters
@@ -88,31 +96,30 @@ public class DashboardController {
         //this data will be used to search for a possible valid planet
         String selectedPlanetType = planetTypeComboBox.getValue();
         String selectedDiscoveryMethod = discoveryMethodComboBox.getValue();
+        Boolean habitableOnly;
+
+        //These just set the filter right before searching it
         if ("All Types".equals(selectedPlanetType)) {
             selectedPlanetType = null;
         }
         if ("All Methods".equals(selectedDiscoveryMethod)) {
             selectedDiscoveryMethod = null;
         }
-        Boolean habitableOnly = habitableToggle.isSelected() ? true : null;
-        List<Exoplanet> results = exoplanetService.searchWithFilters(selectedPlanetType, selectedDiscoveryMethod, habitableOnly);
-        System.out.println("Filtered results: " + results.size());
-
-        if (results.isEmpty()) {
-            return;
+        if (habitableToggle.isSelected()) {
+            habitableOnly = true;
+        } else {
+            habitableOnly = null;
         }
-        selectPlanet(results.getFirst());
+
+        //Searches and returns the list of planets with the correct search filters applied
+        List<Exoplanet> listFilteredPlanets = exoplanetService.findByFilters(selectedPlanetType, selectedDiscoveryMethod, habitableOnly);
+        if (listFilteredPlanets.isEmpty()) {return;}
+
+        Random rand = new Random();
+        //gets a random index from the result to use for the rendered system
+        Exoplanet exoplanet = listFilteredPlanets.get(rand.nextInt(listFilteredPlanets.size()));
+        selectPlanet(exoplanet);
     }
-
-    @FXML //clears all the values to null when called
-    private void handleClearFilters() {
-        String selectedPlanetType = planetTypeComboBox.getValue();
-        String selectedDiscoveryMethod = discoveryMethodComboBox.getValue();
-        boolean habitableOnly = habitableToggle.isSelected();
-
-        return;
-    }
-
 
     //This will generate the canvas images based on the system that the exoplanet is from
     public void renderSystem(String hostStar, String planetName) {
@@ -128,7 +135,6 @@ public class DashboardController {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         centerPanelService.drawSystem(gc, planets, width, height, planetName);
-
         systemPane.getChildren().add(canvas);
     }
 
@@ -190,10 +196,8 @@ public class DashboardController {
     }
 
 
-    //This method uses an external library to add the values to the FXML bar chart, it uses a logarithmic scaling to have the graph be more understandable //TODO fix the ui and simplify
+    //This method uses an external library to add the values to the FXML bar chart, it uses a logarithmic scaling to have the graph be more understandable
     public void setBarChart(Map<String, Double> travelTimes) {
-        barChart.setTitle("Time to get to Exoplanet");
-
         //creates the first bar in the chart
         XYChart.Series series1 = new XYChart.Series();
         //Sets the name for that bar
@@ -215,7 +219,6 @@ public class DashboardController {
 
         barChart.getData().clear();
         barChart.getData().addAll(series1, series2, series3, series4);
-
 
     }
 }

@@ -7,21 +7,6 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="768.0" prefWidth="1366.0" styleClass="root-dashboard" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
-
-   <bottom>
-      <ButtonBar prefHeight="162.0" prefWidth="1451.0" BorderPane.alignment="CENTER" maxWidth="Infinity">
-         <buttons>
-            <ProgressBar fx:id="progressBar" prefHeight="51.0" prefWidth="200.0" progress="0.0" />
-            <Slider fx:id="slider1" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="114.0" />
-            <Slider fx:id="slider2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="63.0" orientation="VERTICAL" prefHeight="114.0" />
-            <ProgressIndicator fx:id="progressIndicator" prefHeight="205.0" progress="0.0" />
-            <Button fx:id="generateRandomPlanet" mnemonicParsing="false" onAction="#handleRandomPlanet" prefHeight="69.0" text="Random System" />
-            <ToggleButton fx:id="toggleButton" mnemonicParsing="false" prefHeight="99.0" text="ToggleButton" />
-            <Button fx:id="button2" mnemonicParsing="false" prefHeight="23.0" text="Button" />
-            <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
-         </buttons>
-      </ButtonBar>
-   </bottom>
     <center>
         <StackPane fx:id="systemPane" maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-image: url('/com/tek/dataproject/images/MainPanel.jpg'); -fx-background-size: cover; -fx-background-position: center;">
         </StackPane>
@@ -29,11 +14,11 @@
    <top>
       <TextFlow maxWidth="Infinity" prefHeight="112.0" prefWidth="1152.0" styleClass="TopPanel" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="urlLabel" prefHeight="35.0" prefWidth="106.0" text="Label" />
-            <Hyperlink fx:id="hyperLink" prefHeight="33.0" prefWidth="451.0" text="Hyperlink" />
-            <Label fx:id="planetNameLabel" prefHeight="44.0" prefWidth="107.0" text="Planet Name:" />
+            <Label fx:id="urlLabel" prefHeight="35.0" prefWidth="120.0" text="Link to NASA:" />
+            <Hyperlink fx:id="hyperLink" prefHeight="33.0" prefWidth="400.0" text="Hyperlink" />
+            <Label fx:id="planetNameLabel" prefHeight="44.0" prefWidth="130.0" text="Planet Name:" />
              <Label fx:id="planetNameDisplay" prefHeight="46.0" prefWidth="254.0" text="Pick a planet" />
-            <Label fx:id="hoststarlabel" prefHeight="49.0" prefWidth="130.0" text="Host Star Name:" />
+            <Label fx:id="hoststarlabel" prefHeight="49.0" prefWidth="145.0" text="Host Star Name:" />
              <Label fx:id="hostStarNameDisplay" prefHeight="51.0" prefWidth="147.0" text="Pick a planet" />
          </children>
       </TextFlow>
@@ -56,7 +41,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="435.0">
                <children>
                   <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
-                  <BarChart styleClass="barChart" fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
+                  <BarChart legendVisible="false"  styleClass="barChart" fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
                       <xAxis>
                           <CategoryAxis tickLabelRotation="45" />ki
                       </xAxis>
@@ -81,7 +66,7 @@
              <ToggleButton mnemonicParsing="false" text="Habitable" fx:id="habitableToggle" styleClass="smallToggle" />
              <Button mnemonicParsing="false" onAction="#handleApplyFilters" text="Apply Filters" fx:id="applyFiltersButton" styleClass="orangeButton" />
              <Button mnemonicParsing="false" onAction="#handleClearFilters" text="Clear Filters" fx:id="clearFiltersButton" styleClass="darkButton" />
-
+             <Button fx:id="generateRandomPlanet" mnemonicParsing="false" onAction="#handleRandomPlanet" prefHeight="69.0" text="Find A Planet" />
          </children></VBox>
    </left>
 </BorderPane>

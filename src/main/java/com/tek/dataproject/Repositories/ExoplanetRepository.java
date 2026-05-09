@@ -14,39 +14,28 @@ import java.util.List;
 @Repository
 public class ExoplanetRepository
 {
+
+    String SQL = null;
     RowMapper<Exoplanet> rowMapper = new DataClassRowMapper<>(Exoplanet.class);
     private final JdbcTemplate jdbcTemplate; //This is the JDBC template wrapper it helps connect to the database and extract the data using the SQL strings to do so
     public ExoplanetRepository(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
-    public List<Exoplanet> findByFilters(String selectedPlanetType, String selectedDiscoveryMethod, Boolean habitableOnly) {
-
-        String SQL = "SELECT * FROM exoplanet_dataset WHERE (CAST(? AS varchar) IS NULL OR planet_type = ?) AND (CAST(? AS varchar) IS NULL OR discovery_method = ?) AND (CAST(? AS boolean) IS NULL OR habitable_zone_flag = ?)";
-
+    public List<Exoplanet> findByFilters(String selectedPlanetType, String selectedDiscoveryMethod, Boolean habitableOnly){
+        //It checks for if the value is null and if it is it will skip over that search value and move on to the next, It requires 2 of each variable because it checks if its null first and then what its actual value is
+        SQL = "SELECT * FROM exoplanet_dataset WHERE (CAST(? AS TEXT) IS NULL OR planet_type = ?) AND (CAST(? AS TEXT) IS NULL OR discovery_method = ?) AND (CAST(? AS BOOLEAN) IS NULL OR habitable_zone_flag = ?)";
         return jdbcTemplate.query(SQL, rowMapper, selectedPlanetType, selectedPlanetType, selectedDiscoveryMethod, selectedDiscoveryMethod, habitableOnly, habitableOnly);
-    }
-
-    public List<Exoplanet> findByMostPlanets(){
-        String SQL ="SELECT host_star FROM exoplanet_dataset WHERE  ";
-        return jdbcTemplate.query(SQL, rowMapper);
-    }
-
-    //TODO planet find radius
-    public Double findRadiusByPlanetName(String planetName){
-        String SQL = "SELECT planet_radius_earth FROM exoplanet_dataset WHERE planet_name = ?";
-        return jdbcTemplate.queryForObject(SQL, Double.class, planetName);
     }
 
     //Todo find by host star
     public List<Exoplanet> findByHostStar(String hostStar){
-        String SQL = "SELECT * FROM exoplanet_dataset WHERE host_star = ?";
+        SQL = "SELECT * FROM exoplanet_dataset WHERE host_star = ?";
         return jdbcTemplate.query(SQL, rowMapper, hostStar);
     }
 
     public Exoplanet findRandomPlanet(){ //This orders the rows randomly and then limit one just picks the first one after the random order
-        String SQL = "SELECT * FROM exoplanet_dataset ORDER BY RANDOM() LIMIT 1";
+        SQL = "SELECT * FROM exoplanet_dataset ORDER BY RANDOM() LIMIT 1";
         return jdbcTemplate.queryForObject(SQL, rowMapper);
     }
 

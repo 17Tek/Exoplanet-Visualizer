@@ -11,12 +11,11 @@ public class Launcher {
 /*
 Notes to implement on the front end----------------------
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Saved links from where I got the data:
 https://eyes.nasa.gov/apps/exo/#/ - Link to eyes on exo planets
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=STELLARHOSTS -nasa exoplanet archive
 https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html - Oracle Docs (JDBC)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 Ways the data was measured:
 
@@ -26,28 +25,13 @@ Direct imaging — actually photographing the planet. Rare but most accurate.
 Microlensing — measuring light bending from gravity. Gives mass estimates.
 
 
-Oh and on the front end when you look something up i want to make it so that it shows a link to the nasa site showing the planet
+DB scheme
 
-11:04 PM
-That's a clean feature. NASA Exoplanet Archive has a page for every confirmed planet. The URL pattern is:
-
-https://exoplanetarchive.ipac.caltech.edu/overview/{planet_name}
-So for Kepler-1167 b it would be:
-
-
-In JavaFX you open it with:
-
-java
-Desktop.getDesktop().browse(new URI("https://exoplanetarchive.ipac.caltech.edu/overview/" + planetName.replace(" ", "%20")));
-
-
-EXOPLANETS:::::
-
-id                   | integer                |           | not null | nextval('exoplanet_dataset_id_seq'::regclass)
+ id                   | integer                |           | not null | next('exoplanet_dataset_id_seq'::regclass)
  planet_name          | character varying(100) |           |          |
  host_star            | character varying(100) |           |          |
  n_stars              | integer                |           |          |
- numberplanets            | integer                |           |          |
+ numberplanets        | integer                |           |          |
  discovery_method     | character varying(100) |           |          |
  disc_year            | numeric(10,2)          |           |          |
  disc_facility        | character varying(100) |           |          |
@@ -75,16 +59,8 @@ id                   | integer                |           | not null | nextval('
  dist_category        | character varying(50)  |           |          |
  star_type            | character varying(50)  |           |          |
  orbital_period_cat   | character varying(50)  |           |          |
+
 Indexes:
     "exoplanet_dataset_pkey" PRIMARY KEY, btree (id)
-
-
-
-
-
-
-
-
-
 
  */

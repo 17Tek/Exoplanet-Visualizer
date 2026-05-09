@@ -24,16 +24,16 @@ public class ExoplanetService {
          return repository.findRandomPlanet();
     }
 
+
+    public List<Exoplanet> findByFilters(String selectedPlanetType, String selectedDiscoveryMethod, Boolean habitableOnly){
+
+        return repository.findByFilters(selectedPlanetType, selectedDiscoveryMethod, habitableOnly);
+    }
+
     public String processLinkForPlanet(Exoplanet exoplanet){
         String exoplanetName = exoplanet.planetName();
         return "https://science.nasa.gov/exoplanet-catalog/"+ exoplanetName.toLowerCase().replace(" ","-") +"/";
     }
-
-    public List<Exoplanet> searchWithFilters(String selectedPlanetType, String selectedDiscoveryMethod, Boolean habitableOnly){
-        return repository.findByFilters(selectedPlanetType, selectedDiscoveryMethod, habitableOnly);
-    }
-
-
     //derives the time and distances for the bar chart, used the measurements commented below
     public Map<String, Double> travelTimes(Exoplanet planet){
 
