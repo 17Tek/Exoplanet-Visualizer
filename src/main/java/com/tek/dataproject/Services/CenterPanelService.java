@@ -97,7 +97,7 @@ public class CenterPanelService
             if (planetType == null) return Color.LIGHTGRAY;
             return switch (planetType) {
                 case "Gas Giant" -> Color.ORANGE;
-                case "Neptune-like" -> Color.CORNFLOWERBLUE;
+                case "Neptune like" -> Color.CORNFLOWERBLUE;
                 case "Super Earth" -> Color.LIGHTGREEN;
                 case "Terrestrial" -> Color.TAN;
                 default -> Color.LIGHTBLUE;

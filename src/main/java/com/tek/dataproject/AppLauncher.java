@@ -15,26 +15,31 @@ public class AppLauncher extends Application {
 
     private ConfigurableApplicationContext springContext;
 
-    @Override
-    public void init() {
-        springContext = SpringApplication.run(AppLauncher.class);
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
+    public void init() {
+        springContext = SpringApplication.run(AppLauncher.class, new String[]{});
+    }
+    @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/tek/dataproject/dashboard.fxml")
-        );
-        loader.setControllerFactory(springContext::getBean);
-        Scene scene = new Scene(loader.load(), 1440, 820);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tek/dataproject/dashboard.fxml"));
 
-        DashboardController controller = loader.getController();
-        controller.setHostServices(getHostServices());
+            loader.setControllerFactory(springContext::getBean);
+            Scene scene = new Scene(loader.load(), 1440, 820);
+            DashboardController controller = loader.getController();
+            controller.setHostServices(getHostServices());
 
-        stage.setMaximized(true);
-        stage.setTitle("Exoplanet Analyzer");
-        stage.setScene(scene);
-        stage.show();
+            stage.setMaximized(true);
+            stage.setTitle("Exoplanet Analyzer");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="824.0" prefWidth="1451.0" styleClass="root-dashboard" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
+<BorderPane prefHeight="Infinity" prefWidth="Infinity" styleClass="root-dashboard" stylesheets="@styles/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tek.dataproject.FXMLControllers.DashboardController">
 
    <bottom>
-      <ButtonBar prefHeight="162.0" prefWidth="1493.0" BorderPane.alignment="CENTER">
+      <ButtonBar prefHeight="162.0" prefWidth="1451.0" BorderPane.alignment="CENTER" maxWidth="Infinity">
          <buttons>
             <ProgressBar fx:id="progressBar" prefHeight="51.0" prefWidth="200.0" progress="0.0" />
             <Slider fx:id="slider1" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="114.0" />
@@ -29,7 +29,7 @@
       </ButtonBar>
    </bottom>
     <center>
-        <StackPane fx:id="systemPane">
+        <StackPane fx:id="systemPane" maxHeight="Infinity" maxWidth="Infinity">
          <children>
                <ImageView fitHeight="554.0" fitWidth="872.0" preserveRatio="false">
                    <image>
@@ -40,7 +40,7 @@
         </StackPane>
     </center>
    <top>
-      <TextFlow prefHeight="112.0" prefWidth="1152.0" styleClass="TopPanel" BorderPane.alignment="CENTER">
+      <TextFlow maxWidth="Infinity" prefHeight="112.0" prefWidth="1152.0" styleClass="TopPanel" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="urlLabel" prefHeight="35.0" prefWidth="106.0" text="Label" />
             <Hyperlink fx:id="hyperLink" prefHeight="33.0" prefWidth="451.0" text="Hyperlink" />
@@ -52,7 +52,7 @@
       </TextFlow>
    </top>
    <right>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="296.0" styleClass="SplitPane" BorderPane.alignment="CENTER">
+      <SplitPane maxHeight="Infinity" dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="296.0" styleClass="SplitPane" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -71,7 +71,7 @@
                   <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
                   <BarChart fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
                       <xAxis>
-                          <CategoryAxis tickLabelRotation="45" />
+                          <CategoryAxis tickLabelRotation="45" />ki
                       </xAxis>
                       <yAxis>
                           <NumberAxis label="Years" tickLabelRotation="0" />
@@ -83,7 +83,7 @@
       </SplitPane>
    </right>
    <left>
-       <VBox prefHeight="604.0" prefWidth="283.0" spacing="10.0" styleClass="leftVbox" BorderPane.alignment="CENTER">
+       <VBox maxHeight="Infinity" prefHeight="604.0" prefWidth="283.0" spacing="10.0" styleClass="leftVbox" BorderPane.alignment="CENTER">
          <children>
 
              <Label prefHeight="38.0" prefWidth="296.0" styleClass="filterTitle" text="Filters:" />
