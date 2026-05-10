@@ -2,7 +2,6 @@ package com.tek.dataproject.FXMLControllers;
 
 import com.tek.dataproject.Services.CenterPanelService;
 import com.tek.dataproject.Services.ExoplanetService;
-import com.tek.dataproject.Services.SolarSystemPlanetService;
 import com.tek.dataproject.TableRecord.Exoplanet;
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -25,8 +24,7 @@ public class DashboardController {
     private ExoplanetService exoplanetService;
     @Autowired
     private CenterPanelService centerPanelService;
-    @Autowired
-    private SolarSystemPlanetService solarSystemPlanetService;
+
 
     //The connection to the actual ui fields that are interactive with the backend
     //FXML makes sure that javaFX injects the values when it loads the fxml
@@ -177,8 +175,10 @@ public class DashboardController {
             planetNameDisplay.setText(planet.planetName());
             hostStarNameDisplay.setText(planet.hostStar());
             renderSystem(planet.hostStar(), planet.planetName());
-            setBarChart(exoplanetService.travelTimes(planet));
-            setScatterChart(exoplanetService.findHostStar(planet.hostStar()));
+            Platform.runLater(() -> {
+                setBarChart(exoplanetService.travelTimes(planet));
+                setScatterChart(exoplanetService.findHostStar(planet.hostStar()));
+            });
 
             String url = exoplanetService.processLinkForPlanet(planet);
             hyperLink.setOnAction(e -> hostServices.showDocument(url));
@@ -204,6 +204,7 @@ public class DashboardController {
             if (p.equilibriumTempK() != null) {
                 series1.getData().add(new XYChart.Data<>(p.planetName(), p.equilibriumTempK()));
             }
+            System.out.println(planets);
         }
         scatterChart.getData().add(series1);
     }

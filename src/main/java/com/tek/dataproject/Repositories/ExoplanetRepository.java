@@ -24,11 +24,12 @@ public class ExoplanetRepository
 
     public List<Exoplanet> findByFilters(String selectedPlanetType, String selectedDiscoveryMethod, Boolean habitableOnly){
         //It checks for if the value is null and if it is it will skip over that search value and move on to the next, It requires 2 of each variable because it checks if its null first and then what its actual value is
+        //The cast tells postgres what kind of data the parameter is in that corresponding slot
         SQL = "SELECT * FROM exoplanet_dataset WHERE (CAST(? AS TEXT) IS NULL OR planet_type = ?) AND (CAST(? AS TEXT) IS NULL OR discovery_method = ?) AND (CAST(? AS BOOLEAN) IS NULL OR habitable_zone_flag = ?)";
         return jdbcTemplate.query(SQL, rowMapper, selectedPlanetType, selectedPlanetType, selectedDiscoveryMethod, selectedDiscoveryMethod, habitableOnly, habitableOnly);
     }
 
-    //Todo find by host star
+
     public List<Exoplanet> findByHostStar(String hostStar){
         SQL = "SELECT * FROM exoplanet_dataset WHERE host_star = ?";
         return jdbcTemplate.query(SQL, rowMapper, hostStar);

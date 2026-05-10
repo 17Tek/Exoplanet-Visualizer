@@ -20,7 +20,7 @@ public class AppLauncher extends Application {
         launch(args);
     }
 
-    @Override
+    @Override //Boots spring and gets all of the spring beans ready like the repo or service
     public void init() {
         springContext = SpringApplication.run(AppLauncher.class, new String[]{});
     }
@@ -29,9 +29,13 @@ public class AppLauncher extends Application {
     public void start(Stage stage) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tek/dataproject/dashboard.fxml"));
+
+            //This line is needed to connect spring to the controller instead of javafx, this allowed me to use dependency injections
             loader.setControllerFactory(springContext::getBean);
             Scene scene = new Scene(loader.load());
             DashboardController controller = loader.getController();
+
+            //This tool is used to help open the browser when you click on a link
             controller.setHostServices(getHostServices());
             stage.setTitle("Exoplanet Analyzer");
             stage.setScene(scene);

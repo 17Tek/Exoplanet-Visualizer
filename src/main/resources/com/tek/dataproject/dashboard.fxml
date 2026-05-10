@@ -24,13 +24,11 @@
       </TextFlow>
    </top>
    <right>
-      <SplitPane maxHeight="Infinity" dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="296.0" styleClass="SplitPane" BorderPane.alignment="CENTER">
+      <SplitPane maxHeight="Infinity" dividerPositions="0.4" orientation="VERTICAL" prefHeight="272.0" prefWidth="296.0" styleClass="SplitPane" BorderPane.alignment="CENTER">
         <items>
             <AnchorPane minHeight="0.0" minWidth="0.0">
                 <children>
-                    <ScatterChart fx:id="scatterChart" legendVisible="false"
-                                  AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-                                  AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                    <ScatterChart fx:id="scatterChart" legendVisible="false" animated="false" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
                         <xAxis>
                             <CategoryAxis tickLabelRotation="45" />
                         </xAxis>
@@ -43,7 +41,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="435.0">
                <children>
                   <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
-                  <BarChart legendVisible="false"  styleClass="barChart" fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
+                  <BarChart legendVisible="false"  styleClass="barChart" fx:id="barChart" prefHeight="284.0" prefWidth="296.0" animated="false">
                       <xAxis>
                           <CategoryAxis tickLabelRotation="45" />
                       </xAxis>
