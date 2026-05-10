@@ -1,9 +1,7 @@
 ## Setup & Installation
 
-### Step 1 — Install Prerequisites
-- Java 21: https://adoptium.net/
+### Step 1 — Install
 - PostgreSQL: https://www.postgresql.org/download/
-- IntelliJ IDEA or NetBeans
 
 ### Step 2 — Clone the Repository
 git clone https://github.com/17Tek/Exoplanet-Visualizer.git
