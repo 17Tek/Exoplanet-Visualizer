@@ -1,8 +1,8 @@
 package com.tek.dataproject.FXMLControllers;
 
-import com.tek.dataproject.Repositories.ExoplanetRepository;
 import com.tek.dataproject.Services.CenterPanelService;
 import com.tek.dataproject.Services.ExoplanetService;
+import com.tek.dataproject.Services.SolarSystemPlanetService;
 import com.tek.dataproject.TableRecord.Exoplanet;
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -25,6 +25,8 @@ public class DashboardController {
     private ExoplanetService exoplanetService;
     @Autowired
     private CenterPanelService centerPanelService;
+    @Autowired
+    private SolarSystemPlanetService solarSystemPlanetService;
 
     //The connection to the actual ui fields that are interactive with the backend
     //FXML makes sure that javaFX injects the values when it loads the fxml
@@ -43,17 +45,35 @@ public class DashboardController {
 
     //split pane fxml with the charts
     @FXML
-    private StackedAreaChart<String, Number> stackedAreaChart;
+    private ScatterChart<String, Number> scatterChart;
     @FXML
     private BarChart<String, Number> barChart;
 
     //Left Vbox FXML
     @FXML
-    private ComboBox<String> planetTypeComboBox;
+    private ToggleButton typeGasGiant;
     @FXML
-    private ComboBox<String> discoveryMethodComboBox;
+    private ToggleButton typeSuperEarth;
+    @FXML
+    private ToggleButton typeNeptune;
+    @FXML
+    private ToggleButton typeMiniNeptune;
+    @FXML
+    private ToggleButton typeSubEarth;
+    @FXML
+    private ToggleButton typeSuperJupiter;
+    @FXML
+    private ToggleButton typeUnknown;
+    @FXML
+    private ToggleButton methodTransit;
+    @FXML
+    private ToggleButton methodRadial;
+    @FXML
+    private ToggleButton methodImaging;
     @FXML
     private ToggleButton habitableToggle;
+    @FXML
+    private Label errorBox;
 
     //This is a java fx class needed to bridge the app and the operating system, allowing me to open the document with whatever the default is
     private HostServices hostServices;
@@ -66,7 +86,6 @@ public class DashboardController {
     // since i'm using canvas for the design of the planets I need to render the system after javafx finishes laying out the scene, without it the canvas cannot draw anything
     @FXML
     public void initialize() {
-        setupComboBoxes();
         Platform.runLater(() -> {
             try {
                 renderSystem("Sun", null);
@@ -76,39 +95,46 @@ public class DashboardController {
         });
     }
 
-    //Gives the values for the dropdown boxes, and presets it to All
-    private void setupComboBoxes() {
-        planetTypeComboBox.getItems().addAll("All Types", "Gas Giant", "Neptune-like", "Mini-Neptune", "Super-Earth", "Super-Jupiter", "Sub-Earth", "Unknown");
-        planetTypeComboBox.setValue("All Types");
-        discoveryMethodComboBox.getItems().addAll("All Methods", "Transit", "Radial Velocity", "Imaging");
-        discoveryMethodComboBox.setValue("All Methods");
-    }
 
     @FXML //sets the filter values back to their original preset
     private void handleClearFilters(){
-        planetTypeComboBox.setValue("All Types");
-        discoveryMethodComboBox.setValue("All Methods");
+        typeGasGiant.setSelected(false);
+        typeSuperEarth.setSelected(false);
+        typeNeptune.setSelected(false);
+        typeMiniNeptune.setSelected(false);
+        typeSubEarth.setSelected(false);
+        typeSuperJupiter.setSelected(false);
+        typeUnknown.setSelected(false);
+        methodTransit.setSelected(false);
+        methodRadial.setSelected(false);
+        methodImaging.setSelected(false);
         habitableToggle.setSelected(false);
+        errorBox.setText("");
     }
 
     @FXML //uses the filters
     private void handleApplyFilters() throws Exception {
         //this data will be used to search for a possible valid planet
-        String selectedPlanetType = planetTypeComboBox.getValue();
-        String selectedDiscoveryMethod = discoveryMethodComboBox.getValue();
-        Boolean habitableOnly;
+        String selectedPlanetType = null;
+        if (typeGasGiant.isSelected()) selectedPlanetType = "Gas Giant";
+        else if (typeSuperEarth.isSelected()) selectedPlanetType = "Super-Earth";
+        else if (typeNeptune.isSelected()) selectedPlanetType = "Neptune-like";
+        else if (typeMiniNeptune.isSelected()) selectedPlanetType = "Mini-Neptune";
+        else if (typeSubEarth.isSelected()) selectedPlanetType = "Sub-Earth";
+        else if (typeSuperJupiter.isSelected()) selectedPlanetType = "Super-Jupiter";
+        else if (typeUnknown.isSelected()) selectedPlanetType = "Unknown";
 
-        //These just set the filter right before searching it
-        if ("All Types".equals(selectedPlanetType)) {
-            selectedPlanetType = null;
-        }
-        if ("All Methods".equals(selectedDiscoveryMethod)) {
-            selectedDiscoveryMethod = null;
-        }
-        if (habitableToggle.isSelected()) {
-            habitableOnly = true;
-        } else {
-            habitableOnly = null;
+        String selectedDiscoveryMethod = null;
+        if (methodTransit.isSelected()) selectedDiscoveryMethod = "Transit";
+        else if (methodRadial.isSelected()) selectedDiscoveryMethod = "Radial Velocity";
+        else if (methodImaging.isSelected()) selectedDiscoveryMethod = "Imaging";
+
+        Boolean habitableOnly = habitableToggle.isSelected() ? true : null;
+
+// If habitable is on, force Super-Earth
+        if (habitableOnly != null && habitableOnly) {
+            selectedPlanetType = "Super-Earth";
+            errorBox.setText("Habitable filter overrides planet type");
         }
 
         //Searches and returns the list of planets with the correct search filters applied
@@ -152,7 +178,7 @@ public class DashboardController {
             hostStarNameDisplay.setText(planet.hostStar());
             renderSystem(planet.hostStar(), planet.planetName());
             setBarChart(exoplanetService.travelTimes(planet));
-            setStackedAreaChart(exoplanetService.findHostStar(planet.hostStar()));
+            setScatterChart(exoplanetService.findHostStar(planet.hostStar()));
 
             String url = exoplanetService.processLinkForPlanet(planet);
             hyperLink.setOnAction(e -> hostServices.showDocument(url));
@@ -167,32 +193,19 @@ public class DashboardController {
     }
 
 
-    //TODO create doc for this and simplify and fix the wrong display of data
-    public void setStackedAreaChart(List<Exoplanet> planets) {
-        stackedAreaChart.getData().clear();
+    public void setScatterChart(List<Exoplanet> planets) {
+        scatterChart.getData().clear();
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Planet Temperature (K)");
+        series1.getData().add(new XYChart.Data<>("Earth", 255));
 
-        // Sort by AU, nulls go to end
-        List<Exoplanet> sorted = planets.stream()
-                .sorted(Comparator.comparingDouble(p -> p.semiMajorAxisAu() != null ? p.semiMajorAxisAu() : 0.0))
-                .collect(java.util.stream.Collectors.toList());
-
-        XYChart.Series<String, Number> radiusSeries = new XYChart.Series<>();
-        radiusSeries.setName("Radius (Earth = 1)");
-
-        XYChart.Series<String, Number> massSeries = new XYChart.Series<>();
-        massSeries.setName("Mass (Earth = 1)");
-
-        // Inject Earth at 1.0 AU as reference
-        radiusSeries.getData().add(new XYChart.Data<>("Earth (1.0 AU)", 1.0));
-        massSeries.getData().add(new XYChart.Data<>("Earth (1.0 AU)", 1.0));
-
-        for (Exoplanet p : sorted) {
-            String label = p.planetName() + " (" + p.semiMajorAxisAu() + " AU)";
-            radiusSeries.getData().add(new XYChart.Data<>(label, p.planetRadiusEarth() != null ? p.planetRadiusEarth() : 1.0));
-            massSeries.getData().add(new XYChart.Data<>(label, p.planetMassEarth() != null ? p.planetMassEarth() : 1.0));
+        for(Exoplanet p : planets) {
+            //same as setBarChart
+            if (p.equilibriumTempK() != null) {
+                series1.getData().add(new XYChart.Data<>(p.planetName(), p.equilibriumTempK()));
+            }
         }
-
-        stackedAreaChart.getData().addAll(radiusSeries, massSeries);
+        scatterChart.getData().add(series1);
     }
 
 

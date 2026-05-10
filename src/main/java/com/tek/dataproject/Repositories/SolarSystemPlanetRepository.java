@@ -18,13 +18,5 @@ public class SolarSystemPlanetRepository
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public SolarSystemPlanet comparePlanetsResult(Exoplanet exoplanet) {
-        String SQL = "SELECT s.* FROM solarsystem_dataset s " +
-                "CROSS JOIN exoplanet_dataset e " +
-                "WHERE e.planet_name = ? " +
-                "ORDER BY ABS(s.radius - e.planet_radius_earth) " +
-                "LIMIT 1";
-        return jdbcTemplate.queryForObject(SQL, rowMapper, exoplanet.planetName());
-    }
 
 }

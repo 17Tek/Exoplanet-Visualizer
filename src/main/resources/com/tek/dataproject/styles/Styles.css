@@ -24,9 +24,6 @@
     -fx-padding: 10;
 }
 
-/*---------------------------Bottom Button Panel------------------------------ */
-
-
 /*---------------------------Charts styels------------------------------ */
 
 .chart-axis-tick-mark {
@@ -40,13 +37,6 @@
 .axis {
     -fx-tick-label-fill: white;
 }
-
-
-
-/*---------------------------Center Pane------------------------------ */
-
-
-
 /*---------------------------Split Pane------------------------------ */
 
 .SplitPane {
@@ -61,6 +51,12 @@
 
 /*---------------------------Left Vbox------------------------------ */
 
+
+.errorBox{
+    -fx-text-fill: #9c2e2e;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
 
 .leftVbox {
     -fx-background-color: #101936;
@@ -130,28 +126,6 @@
     -fx-text-fill: white;
 }
 
-
-
-
-/*--------------------------------------------------------- */
-#progressBar .track {
-    -fx-background-color: #333333;
-}
-
-#progressBar .bar {
-    -fx-background-color: #EF6400;
-}
-
-/*--------------------------------------------------------- */
-#toggleButton{
-    -fx-background-color: #c25100;
-}
-
-#toggleButton:selected{
-    -fx-background-color: #EF6400;
-    -fx-text-fill: white;
-}
-
 #generateRandomPlanet{
     -fx-background-color: #EF6400;
     -fx-text-fill: white;
@@ -161,13 +135,6 @@
 
 }
 
-#choiceBox{
-    -fx-fill: #EF6400FF;
-}
-
-#stackedAreaChart{
-    -fx-fill: #EF6400FF;
-}
 
 #urlLabel{
     -fx-text-fill: white;
@@ -205,6 +172,7 @@
     -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
+
 
 #splitpaneLeft{
     -fx-background-color: grey;

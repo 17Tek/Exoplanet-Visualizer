@@ -26,27 +26,29 @@
    <right>
       <SplitPane maxHeight="Infinity" dividerPositions="0.5" orientation="VERTICAL" prefHeight="272.0" prefWidth="296.0" styleClass="SplitPane" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-               <children>
-                   <StackedAreaChart fx:id="stackedAreaChart" layoutY="-2.0" prefHeight="277.0" prefWidth="295.0">
-                       <xAxis>
-                           <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                           <NumberAxis side="LEFT" />
-                       </yAxis>
-                   </StackedAreaChart>
-               </children>
+            <AnchorPane minHeight="0.0" minWidth="0.0">
+                <children>
+                    <ScatterChart fx:id="scatterChart" legendVisible="false"
+                                  AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                                  AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                        <xAxis>
+                            <CategoryAxis tickLabelRotation="45" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Temp (K)" />
+                        </yAxis>
+                    </ScatterChart>
+                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="435.0">
                <children>
                   <Canvas height="200.0" layoutX="47.0" layoutY="51.0" width="200.0" />
                   <BarChart legendVisible="false"  styleClass="barChart" fx:id="barChart" prefHeight="284.0" prefWidth="296.0">
                       <xAxis>
-                          <CategoryAxis tickLabelRotation="45" />ki
+                          <CategoryAxis tickLabelRotation="45" />
                       </xAxis>
                       <yAxis>
-                          <NumberAxis label="Travel Time (10^n Years)" tickLabelRotation="0" />
+                          <NumberAxis label="Travel Time (10^n Years)" />
                       </yAxis>
                   </BarChart>
                </children>
@@ -54,19 +56,30 @@
         </items>
       </SplitPane>
    </right>
-   <left>
-       <VBox maxHeight="Infinity" prefHeight="604.0" prefWidth="283.0" spacing="10.0" styleClass="leftVbox" BorderPane.alignment="CENTER">
-         <children>
-
-             <Label prefHeight="38.0" prefWidth="296.0" styleClass="filterTitle" text="Filters:" />
-             <Label text="Planet Type" styleClass="filterLabel" />
-             <ComboBox prefWidth="150.0" fx:id="planetTypeComboBox" styleClass="filterBox" />
-             <Label text="Discovery Method" styleClass="filterLabel" />
-             <ComboBox prefWidth="150.0" fx:id="discoveryMethodComboBox" styleClass="filterBox" />
-             <ToggleButton mnemonicParsing="false" text="Habitable" fx:id="habitableToggle" styleClass="smallToggle" />
-             <Button mnemonicParsing="false" onAction="#handleApplyFilters" text="Apply Filters" fx:id="applyFiltersButton" styleClass="orangeButton" />
-             <Button mnemonicParsing="false" onAction="#handleClearFilters" text="Clear Filters" fx:id="clearFiltersButton" styleClass="darkButton" />
-             <Button fx:id="generateRandomPlanet" mnemonicParsing="false" onAction="#handleRandomPlanet" prefHeight="69.0" text="Find A Planet" />
-         </children></VBox>
-   </left>
+    <left>
+        <VBox maxHeight="Infinity" prefHeight="604.0" prefWidth="283.0" spacing="10.0" styleClass="leftVbox" BorderPane.alignment="CENTER">
+            <Label prefHeight="38.0" prefWidth="296.0" styleClass="filterTitle" text="Filters:" />
+            <Label text="Planet Type" styleClass="filterLabel" />
+            <FlowPane hgap="5" vgap="5" prefWrapLength="250">
+                <ToggleButton text="Gas Giant" fx:id="typeGasGiant" styleClass="smallToggle" />
+                <ToggleButton text="Super-Earth" fx:id="typeSuperEarth" styleClass="smallToggle" />
+                <ToggleButton text="Neptune-like" fx:id="typeNeptune" styleClass="smallToggle" />
+                <ToggleButton text="Mini-Neptune" fx:id="typeMiniNeptune" styleClass="smallToggle" />
+                <ToggleButton text="Sub-Earth" fx:id="typeSubEarth" styleClass="smallToggle" />
+                <ToggleButton text="Super-Jupiter" fx:id="typeSuperJupiter" styleClass="smallToggle" />
+                <ToggleButton text="Unknown" fx:id="typeUnknown" styleClass="smallToggle" />
+            </FlowPane>
+            <Label text="Discovery Method" styleClass="filterLabel" />
+            <FlowPane hgap="5" vgap="5" prefWrapLength="250">
+                <ToggleButton text="Transit" fx:id="methodTransit" styleClass="smallToggle" />
+                <ToggleButton text="Radial Velocity" fx:id="methodRadial" styleClass="smallToggle" />
+                <ToggleButton text="Imaging" fx:id="methodImaging" styleClass="smallToggle" />
+            </FlowPane>
+            <ToggleButton mnemonicParsing="false" text="Habitable" fx:id="habitableToggle" styleClass="smallToggle" />
+            <Button mnemonicParsing="false" onAction="#handleApplyFilters" text="Apply Filters" fx:id="applyFiltersButton" styleClass="orangeButton" />
+            <Button mnemonicParsing="false" onAction="#handleClearFilters" text="Clear Filters" fx:id="clearFiltersButton" styleClass="darkButton" />
+            <Button fx:id="generateRandomPlanet" mnemonicParsing="false" onAction="#handleRandomPlanet" text="Find A Planet" styleClass="orangeButton" />
+            <Label fx:id="errorBox" styleClass="errorBox" wrapText="true"/>
+        </VBox>
+    </left>
 </BorderPane>
